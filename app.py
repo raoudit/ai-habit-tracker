@@ -18,9 +18,7 @@ import plotly.graph_objects as go
 from datetime import datetime, date, timedelta
 import os
 
-# ══════════════════════════════════════════════════════
-# ① SENTIMENT ANALYSIS ENGINE
-# ══════════════════════════════════════════════════════
+
 POSITIVE_WORDS = {
     "happy","great","amazing","good","excellent","wonderful","fantastic",
     "productive","energetic","motivated","excited","awesome","positive",
@@ -53,9 +51,9 @@ def get_mood_label(p: float) -> str:
     else:           return "😞 Very Negative"
 
 
-# ══════════════════════════════════════════════════════
-# ② STREAK ENGINE
-# ══════════════════════════════════════════════════════
+
+#  STREAK ENGINE
+
 def calculate_streak(df: pd.DataFrame) -> int:
     if df.empty:
         return 0
@@ -74,9 +72,9 @@ def calculate_streak(df: pd.DataFrame) -> int:
     return streak
 
 
-# ══════════════════════════════════════════════════════
-# ③ HABIT RELAPSE PREDICTOR
-# ══════════════════════════════════════════════════════
+
+# HABIT RELAPSE PREDICTOR
+
 def predict_relapse_risk(df: pd.DataFrame) -> dict:
     if len(df) < 3:
         return {"score": 0, "level": "Insufficient Data", "color": "#94a3b8", "tips": ["Log at least 3 days to enable prediction."]}
@@ -125,9 +123,9 @@ def predict_relapse_risk(df: pd.DataFrame) -> dict:
     return {"score": score, "level": level, "color": color, "tips": tips}
 
 
-# ══════════════════════════════════════════════════════
-# ④ WELLNESS SCORE  (5-dimensional, 0–100)
-# ══════════════════════════════════════════════════════
+
+#  WELLNESS SCORE  (5-dimensional, 0–100)
+
 def calculate_wellness_score(df: pd.DataFrame) -> dict:
     if df.empty:
         return {"total": 0, "fitness": 0, "mental": 0, "sleep": 0, "reading": 0, "consistency": 0}
@@ -157,9 +155,9 @@ def calculate_wellness_score(df: pd.DataFrame) -> dict:
     }
 
 
-# ══════════════════════════════════════════════════════
+
 # ⑤ AI COACHING ENGINE
-# ══════════════════════════════════════════════════════
+
 def generate_coaching(entry: dict, df: pd.DataFrame) -> list:
     score  = entry.get("sentiment_score", 0)
     gym    = entry.get("gym_minutes", 0) or 0
@@ -216,9 +214,9 @@ def generate_coaching(entry: dict, df: pd.DataFrame) -> list:
     return msgs
 
 
-# ══════════════════════════════════════════════════════
-# ⑥ DATA MANAGER (CSV local storage)
-# ══════════════════════════════════════════════════════
+
+#  DATA MANAGER (CSV local storage)
+
 DATA_FILE = "habit_data.csv"
 COLUMNS   = ["date","running_km","gym_minutes","sport","book_pages",
               "sleep_hours","water_glasses","journal","sentiment_score","mood_label"]
@@ -238,9 +236,9 @@ def save_entry(entry: dict):
     df.to_csv(DATA_FILE, index=False)
 
 
-# ══════════════════════════════════════════════════════
-# ⑦ WEEKLY REPORT GENERATOR (downloadable .txt)
-# ══════════════════════════════════════════════════════
+
+#  WEEKLY REPORT GENERATOR (downloadable .txt)
+
 def generate_weekly_report(df: pd.DataFrame) -> str:
     if df.empty:
         return "No data available for report."
@@ -308,9 +306,9 @@ def generate_weekly_report(df: pd.DataFrame) -> str:
     return report
 
 
-# ══════════════════════════════════════════════════════
-# ⑧ HEATMAP PREP
-# ══════════════════════════════════════════════════════
+
+#  HEATMAP PREP
+
 def build_heatmap_data(df: pd.DataFrame) -> pd.DataFrame:
     if df.empty:
         return pd.DataFrame()
@@ -327,9 +325,9 @@ def build_heatmap_data(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-# ══════════════════════════════════════════════════════
-# ⑨ STREAMLIT MAIN
-# ══════════════════════════════════════════════════════
+
+#  STREAMLIT MAIN
+
 def main():
     st.set_page_config(
         page_title="AI Habit Tracker",
@@ -372,7 +370,7 @@ def main():
     df     = load_data()
     streak = calculate_streak(df)
 
-    # ─── SIDEBAR ───────────────────────────────────────
+    #  SIDEBAR
     with st.sidebar:
         st.markdown("### 📥 Log Today's Habits")
         st.caption(f"📅 {date.today().strftime('%A, %B %d %Y')}")
@@ -455,7 +453,7 @@ def main():
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # ─── GOAL PROGRESS BARS ────────────────────────────
+    # GOAL PROGRESS BARS 
     if not df.empty:
         df_temp = df.copy()
         df_temp["date"] = pd.to_datetime(df_temp["date"])
@@ -483,7 +481,7 @@ def main():
 
     st.markdown("---")
 
-    # ─── RELAPSE PREDICTOR + RADAR ─────────────────────
+    #  RELAPSE PREDICTOR + RADAR
     left, right = st.columns(2)
 
     with left:
@@ -542,7 +540,7 @@ def main():
 
     st.markdown("---")
 
-    # ─── AI COACHING ───────────────────────────────────
+    #  AI COACHING 
     if "coaching" in st.session_state:
         st.markdown('<div class="section-hdr">🤖 AI Coaching Insights</div>', unsafe_allow_html=True)
         for title, msg, color in st.session_state["coaching"]:
@@ -553,7 +551,7 @@ def main():
             </div>""", unsafe_allow_html=True)
         st.markdown("---")
 
-    # ─── CHARTS ────────────────────────────────────────
+    #  CHARTS 
     if not df.empty:
         dfp = df.copy()
         dfp["date"] = pd.to_datetime(dfp["date"])
@@ -679,7 +677,7 @@ def main():
     else:
         st.info("👈 No data yet! Use the sidebar to log your first habit entry.")
 
-    # ─── WEEKLY REPORT DOWNLOAD ────────────────────────
+    #  WEEKLY REPORT DOWNLOAD
     st.markdown("---")
     st.markdown('<div class="section-hdr">📄 Weekly Progress Report</div>', unsafe_allow_html=True)
     report_text = generate_weekly_report(df)
