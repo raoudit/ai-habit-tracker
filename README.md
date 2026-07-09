@@ -28,15 +28,14 @@ A Self-Evolving Dashboard that tracks physical fitness, mental health, and intel
 
 ---
 
-## 📁 Project Structure
-
+# 📂 Project Structure
 
 ai_habit_tracker/
-├── app.py              ← Main Streamlit dashboard
-├── sample_data.py      ← Demo data generator (30 days)
-├── requirements.txt    ← Python dependencies
-├── habit_data.csv      ← Auto-created local data store
-└── README.md           ← This file
+│
+├── app.py              # Main Streamlit dashboard
+├── sample_data.py      # Generates 30 days of sample habit data
+├── requirements.txt    # Python dependencies
+└── README.md           # Project documentation
 
 ---
 
