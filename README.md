@@ -1,7 +1,9 @@
 # 🧠 AI-Driven Multi-Modal Habit Tracker
 
-> **Python Lab Project** | AI + Data Science + NLP + Interactive Dashboard
+An AI-powered personal growth dashboard combining fitness tracking, mood analysis, and habit intelligence using Python, NLP, and Data Science.
 
+🔗 **Live Demo:**  
+[AI Habit Tracker Demo](https://ai-habit-tracker-dxxtcwnwq5pn9cig2u6vot.streamlit.app/)
 ---
 
 ## 📌 Project Overview
@@ -28,35 +30,40 @@ A Self-Evolving Dashboard that tracks physical fitness, mental health, and intel
 
 ## 📁 Project Structure
 
-```
+
 ai_habit_tracker/
 ├── app.py              ← Main Streamlit dashboard
 ├── sample_data.py      ← Demo data generator (30 days)
 ├── requirements.txt    ← Python dependencies
 ├── habit_data.csv      ← Auto-created local data store
 └── README.md           ← This file
-```
 
 ---
 
-## ▶️ How to Run
+## 🌐 How To Use
 
-### Step 1 — Install dependencies
-```bash
-pip install -r requirements.txt
-```
+1. Open the live AI Habit Tracker dashboard.
 
-### Step 2 — (Optional) Generate sample data
-```bash
-python sample_data.py
-```
+2. Enter your daily information:
+   - Running distance
+   - Gym activity
+   - Sports activity
+   - Reading progress
+   - Daily journal entry
 
-### Step 3 — Launch the app
-```bash
-streamlit run app.py
-```
+3. The system analyzes your inputs using:
+   - NLP sentiment analysis
+   - Habit tracking logic
+   - Behavioral pattern analysis
 
-The dashboard opens automatically in your browser at `http://localhost:8501`
+4. Explore the dashboard:
+   - View consistency streaks
+   - Track fitness progress
+   - Analyze mood trends
+   - Receive personalized coaching suggestions
+
+5. Use the insights to improve daily habits and maintain consistency.
+
 
 ---
 
@@ -69,25 +76,25 @@ Captures multi-modal data:
 - **Textual**: Daily journal entry
 
 ### 2. Sentiment Analysis Engine
-```python
+
 def analyze_sentiment(text: str) -> float:
     # Lexicon-based analysis
     # Returns polarity score: -1.0 (negative) to +1.0 (positive)
-```
+
 - Counts positive/negative keyword occurrences
 - Normalizes by text length
 - Returns polarity score + mood label
 
 ### 3. Streak & Motivation Engine
-```python
+
 def calculate_streak(df: pd.DataFrame) -> int:
     # Compares today's date with last entry date
     # Consecutive days → streak increases
     # Break in days → streak resets
-```
+
 
 ### 4. AI Coaching / Inference Engine
-```python
+
 def generate_coaching_suggestion(entry, df) -> str:
     # Rule 1: Low gym + negative mood → Improvement Suggestion
     # Rule 2: High gym + negative mood → Recovery Alert
@@ -95,7 +102,7 @@ def generate_coaching_suggestion(entry, df) -> str:
     # Rule 4: Good reading + positive mood → Reinforcement
     # Rule 5: No journal → Journaling Reminder
     # Rule 6: Long streak → Celebration
-```
+
 
 ---
 
